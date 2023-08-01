@@ -1,0 +1,96 @@
+#!/bin/sh
+
+# PROVIDE: crowdsec
+# BEFORE: crowdsec_firewall
+# REQUIRE: LOGIN DAEMON NETWORKING
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# crowdsec_enable (bool):	Set it to YES to enable crowdsec agent.
+#				Default is "NO".
+# crowdsec_config (str):	Set the agent config path.
+#				Default is "%%PREFIX%%/etc/crowdsec/config.yaml".
+# crowdsec_flags (str):	Set the extra flags to run agent.
+#				Default is ""
+
+. /etc/rc.subr
+
+name=crowdsec
+desc="Crowdsec Agent"
+rcvar=crowdsec_enable
+
+load_rc_config $name
+
+: "${crowdsec_enable:=NO}"
+: "${crowdsec_config:=%%PREFIX%%/etc/crowdsec/config.yaml}"
+: "${crowdsec_flags:=}"
+
+pidfile=/var/run/${name}.pid
+pidfile_daemon=/var/run/${name}.daemon.pid
+required_files="$crowdsec_config"
+command="%%PREFIX%%/bin/${name}"
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+start_precmd="${name}_precmd"
+configtest_cmd="${name}_configtest"
+extra_commands="configtest reload"
+
+crowdsec_precmd() {
+    cs_cli() {
+        "%%PREFIX%%/bin/cscli" -c "${crowdsec_config}" "$@"
+    }
+    Config() {
+        cs_cli config show --key "Config.$1"
+    }
+
+    HUB_DIR=$(Config ConfigPaths.HubDir)
+    if ! ls -1qA "$HUB_DIR"/* >/dev/null 2>&1; then
+        echo "Fetching hub inventory"
+        cs_cli hub update || :
+    fi
+
+    if [ "$(cs_cli machines list -o json)" = "[]" ]; then
+        echo "Registering LAPI"
+        cs_cli machines add --auto || :
+    fi
+
+    CONFIG_DIR=$(Config ConfigPaths.ConfigDir)
+    if [ ! -s "${CONFIG_DIR}/online_api_credentials.yaml" ]; then
+        echo "Registering CAPI"
+        cs_cli capi register || :
+    fi
+
+    # This would work but takes 30secs to timeout while reading the metrics, because crowdsec is not running yet.
+    #    cs_cli collections inspect crowdsecurity/freebsd 2>/dev/null | grep ^installed | grep -q true || \
+    #        cs_cli collections install crowdsecurity/freebsd || :
+
+    # So we just check for the file
+    if [ ! -e "${CONFIG_DIR}/collections/freebsd.yaml" ]; then
+        cs_cli collections install crowdsecurity/freebsd || :
+    fi
+}
+
+crowdsec_stop()
+{
+    if [ -f "$pidfile_daemon" ]; then
+        kill -TERM "$(cat "$pidfile_daemon")"
+    fi
+}
+
+crowdsec_start()
+{
+    /usr/sbin/daemon -f -P "$pidfile_daemon" -p "$pidfile" -t "$desc" --restart --restart-delay 10 -- \
+        "$command" -c "$crowdsec_config" ${crowdsec_flags}
+}
+
+crowdsec_configtest()
+{
+    echo "Performing sanity check on ${name} configuration."
+    if "$command" -c "$crowdsec_config" -t -error; then
+        echo "Configuration test OK"
+    fi
+}
+
+run_rc_command "$1"
