@@ -51,15 +51,20 @@ crowdsec_precmd() {
         cs_cli hub update || :
     fi
 
-    if [ "$(cs_cli machines list -o json)" = "[]" ]; then
-        echo "Registering LAPI"
-        cs_cli machines add --auto || :
-    fi
-
     CONFIG_DIR=$(Config ConfigPaths.ConfigDir)
-    if [ ! -s "${CONFIG_DIR}/online_api_credentials.yaml" ]; then
-        echo "Registering CAPI"
-        cs_cli capi register || :
+
+    if [ "$(cs_cli config show --key Config.API.Server.Enable)" != "false" ]; then
+
+        if [ "$(cs_cli machines list -o json)" = "[]" ]; then
+            echo "Registering LAPI"
+            cs_cli machines add --auto || :
+        fi
+
+        if [ ! -s "${CONFIG_DIR}/online_api_credentials.yaml" ]; then
+            echo "Registering CAPI"
+            cs_cli capi register || :
+        fi
+
     fi
 
     # This would work but takes 30secs to timeout while reading the metrics, because crowdsec is not running yet.
