@@ -12,7 +12,7 @@
 #				Default is "NO".
 # crowdsec_config (str):	Set the agent config path.
 #				Default is "%%PREFIX%%/etc/crowdsec/config.yaml".
-# crowdsec_main_instance (str):	Name for the crowdsec instance when it's running its own lapi.
+# crowdsec_machine_name (str):	Name for the crowdsec instance when it's running its own lapi.
 #				Default is "main".
 # crowdsec_flags (str):	Set the extra flags to run the agent.
 #				Default is ""
@@ -27,7 +27,7 @@ load_rc_config "$name"
 
 : "${crowdsec_enable:=NO}"
 : "${crowdsec_config:=%%PREFIX%%/etc/crowdsec/config.yaml}"
-: "${crowdsec_main_instance:=main}"
+: "${crowdsec_machine_name:=main}"
 : "${crowdsec_flags:=}"
 
 pidfile=/var/run/${name}.pid
@@ -62,7 +62,7 @@ crowdsec_precmd() {
         # There are no machines, we create the main one
         if [ "$(cs_cli machines list -o json)" = "[]" ]; then
             echo "Registering LAPI"
-            cs_cli machines add "${crowdsec_main_instance}" --auto || :
+            cs_cli machines add "${crowdsec_machine_name}" --auto || :
         fi
 
         # Register to the central server to receive the community blocklist and more
