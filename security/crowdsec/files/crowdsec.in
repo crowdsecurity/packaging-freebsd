@@ -12,7 +12,9 @@
 #				Default is "NO".
 # crowdsec_config (str):	Set the agent config path.
 #				Default is "%%PREFIX%%/etc/crowdsec/config.yaml".
-# crowdsec_flags (str):	Set the extra flags to run agent.
+# crowdsec_machine_name (str):	Name for the crowdsec instance when it's running its own lapi.
+#				Default is "main".
+# crowdsec_flags (str):	Set the extra flags to run the agent.
 #				Default is ""
 
 . /etc/rc.subr
@@ -21,10 +23,11 @@ name=crowdsec
 desc="Crowdsec Agent"
 rcvar=crowdsec_enable
 
-load_rc_config $name
+load_rc_config "$name"
 
 : "${crowdsec_enable:=NO}"
 : "${crowdsec_config:=%%PREFIX%%/etc/crowdsec/config.yaml}"
+: "${crowdsec_machine_name:=main}"
 : "${crowdsec_flags:=}"
 
 pidfile=/var/run/${name}.pid
@@ -53,13 +56,16 @@ crowdsec_precmd() {
 
     CONFIG_DIR=$(Config ConfigPaths.ConfigDir)
 
+    # Is the LAPI enabled on this node?
     if [ "$(cs_cli config show --key Config.API.Server.Enable)" != "false" ]; then
 
+        # There are no machines, we create the main one
         if [ "$(cs_cli machines list -o json)" = "[]" ]; then
             echo "Registering LAPI"
-            cs_cli machines add --auto || :
+            cs_cli machines add "${crowdsec_machine_name}" --auto || :
         fi
 
+        # Register to the central server to receive the community blocklist and more
         if [ ! -s "${CONFIG_DIR}/online_api_credentials.yaml" ]; then
             echo "Registering CAPI"
             cs_cli capi register || :
@@ -87,7 +93,7 @@ crowdsec_stop()
 crowdsec_start()
 {
     /usr/sbin/daemon -f -P "$pidfile_daemon" -p "$pidfile" -t "$desc" --restart --restart-delay 10 -- \
-        "$command" -c "$crowdsec_config" ${crowdsec_flags}
+        "$command" -c "$crowdsec_config" "$crowdsec_flags"
 }
 
 crowdsec_configtest()
