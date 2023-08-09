@@ -33,6 +33,7 @@ pidfile=/var/run/${name}.pid
 required_files="$crowdsec_firewall_config"
 command="%%PREFIX%%/bin/crowdsec-firewall-bouncer"
 start_cmd="${name}_start"
+stop_cmd="${name}_stop"
 start_precmd="${name}_precmd"
 configtest_cmd="${name}_configtest"
 extra_commands="configtest"
@@ -55,6 +56,29 @@ crowdsec_firewall_precmd() {
     fi
 }
 
+crowdsec_firewall_stop()
+{
+    if [ ! -f "$pidfile" ]; then
+        echo "${name} is not running."
+        return
+    fi
+    pid=$(cat "$pidfile")
+    if kill -0 "$pid" >/dev/null 2>&1; then
+        echo "Stopping ${name}."
+        kill -s TERM "$pid" >/dev/null 2>&1
+        # shellcheck disable=SC2034
+        for i in $(seq 1 20); do
+            sleep 1
+            if ! kill -0 "$pid" >/dev/null 2>&1; then
+                return
+            fi
+        done
+        echo "Timeout, terminating ${name} with SIGKILL."
+        kill -s KILL "$pid" >/dev/null 2>&1
+    else
+        echo "${name} is not running."
+    fi
+}
 crowdsec_firewall_start() {
     /usr/sbin/daemon -f -p "$pidfile" -t "$desc" -- \
         "$command" -c "$crowdsec_firewall_config" ${crowdsec_firewall_flags}
