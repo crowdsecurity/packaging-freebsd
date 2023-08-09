@@ -34,6 +34,7 @@ pidfile=/var/run/${name}.pid
 required_files="$crowdsec_config"
 command="%%PREFIX%%/bin/${name}"
 start_cmd="${name}_start"
+stop_cmd="${name}_stop"
 start_precmd="${name}_precmd"
 configtest_cmd="${name}_configtest"
 extra_commands="configtest reload"
@@ -78,6 +79,30 @@ crowdsec_precmd() {
     # So we just check for the file
     if [ ! -e "${CONFIG_DIR}/collections/freebsd.yaml" ]; then
         cs_cli collections install crowdsecurity/freebsd || :
+    fi
+}
+
+crowdsec_stop()
+{
+    if [ ! -f "$pidfile" ]; then
+        echo "${name} is not running."
+        return
+    fi
+    pid=$(cat "$pidfile")
+    if kill -0 "$pid" >/dev/null 2>&1; then
+        echo "Stopping ${name}."
+        kill -s TERM "$pid" >/dev/null 2>&1
+        # shellcheck disable=SC2034
+        for i in $(seq 1 20); do
+            sleep 1
+            if ! kill -0 "$pid" >/dev/null 2>&1; then
+                return
+            fi
+        done
+        echo "Timeout, terminating ${name} with SIGKILL."
+        kill -s KILL "$pid" >/dev/null 2>&1
+    else
+        echo "${name} is not running."
     fi
 }
 
