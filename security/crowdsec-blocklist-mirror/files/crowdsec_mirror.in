@@ -24,12 +24,14 @@ load_rc_config $name
 
 : "${crowdsec_mirror_enable:=NO}"
 : "${crowdsec_mirror_config:=%%ETCDIR%%/crowdsec-blocklist-mirror.yaml}"
+: "${crowdsec_mirror_name:=cs-blocklist-mirror-$(date +%s)}"
 : "${crowdsec_mirror_flags:=}"
 
 pidfile=/var/run/${name}.pid
 required_files="$crowdsec_mirror_config"
 command="%%PREFIX%%/bin/crowdsec-blocklist-mirror"
 start_cmd="${name}_start"
+stop_cmd="${name}_stop"
 start_precmd="${name}_precmd"
 configtest_cmd="${name}_configtest"
 extra_commands="configtest"
@@ -40,14 +42,13 @@ crowdsec_mirror_precmd() {
     orig_line="lapi_key: .*\${API_KEY}.*"
     # IF the bouncer is not configured
     if grep -q "${orig_line}" "${crowdsec_mirror_config}"; then
-        BOUNCER="cs-blocklist-mirror-$(date +%s)"
         # AND crowdsec is installed..
         if command -v "$CSCLI" >/dev/null; then
             # THEN, register it to the local API
-            API_KEY="$($CSCLI bouncers add "${BOUNCER}" -o raw)"
+            API_KEY="$($CSCLI bouncers add "${crowdsec_mirror_name}" -o raw)"
             if [ -n "$API_KEY" ]; then
-                sed -i "" "s/${orig_line}/lapi_key: ${API_KEY}     # ${BOUNCER}/" "${crowdsec_mirror_config}"
-                echo "Registered: ${BOUNCER}"
+                sed -i "" "s|${orig_line}|lapi_key: ${API_KEY}     # ${crowdsec_mirror_name}|" "${crowdsec_mirror_config}"
+                echo "Registered: ${crowdsec_mirror_name}"
             fi
         fi
     fi
@@ -64,6 +65,32 @@ crowdsec_mirror_precmd() {
                 echo "LAPI listen address set up."
             fi
         fi
+    fi
+}
+
+crowdsec_mirror_stop()
+{
+    if [ ! -f "$pidfile" ]; then
+        echo "${name} is not running."
+        return
+    fi
+    pid=$(cat "$pidfile")
+    if kill -0 "$pid" >/dev/null 2>&1; then
+        echo "Stopping ${name}."
+        kill -s TERM "$pid" >/dev/null 2>&1
+        # shellcheck disable=SC2034
+        for i in $(seq 1 20); do
+            sleep 1
+            if ! kill -0 "$pid" >/dev/null 2>&1; then
+                rm -f "$pidfile"
+                return
+            fi
+        done
+        echo "Timeout, terminating ${name} with SIGKILL."
+        kill -s KILL "$pid" >/dev/null 2>&1
+        rm -f "$pidfile"
+    else
+        echo "${name} is not running."
     fi
 }
 
