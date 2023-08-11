@@ -10,8 +10,8 @@ test -e /usr/local/etc/cron.d/oscrowdsec.cron && exit 0
 upgraded=$(/usr/local/bin/cscli --error hub upgrade)
 if [ -n "$upgraded" ]; then
     # splay initial metrics push
-    sleep $(jot -r 1 1 60)
-    service crowdsec reload
+    sleep "$(jot -r 1 1 60)"
+    service crowdsec onestatus && service crowdsec reload
 fi
 
 exit 0
