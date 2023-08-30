@@ -1,7 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.5.3-rc4
-PORTREVISION=	9
+DISTVERSION=	1.5.3-rc6
 CATEGORIES=	security
 
 MASTER_SITES=	https://github.com/${GH_ACCOUNT}/${GH_PROJECT}/releases/download/${DISTVERSIONFULL}/:vendor
@@ -22,7 +21,7 @@ USES=		gmake pkgconfig go:no_targets
 USE_GITHUB=	yes
 GH_ACCOUNT=	crowdsecurity
 GH_PROJECT=	crowdsec
-GH_TAGNAME=	2cb7b0be
+GH_TAGNAME=	22146eb3
 
 GO_MODULE=	github.com/${GH_ACCOUNT}/${GH_PROJECT}
 
@@ -30,7 +29,6 @@ USE_RC_SUBR=	crowdsec
 
 MAKE_ARGS=	BUILD_VERSION="${DISTVERSIONPREFIX}${DISTVERSION}-freebsd" \
 		BUILD_TAG="${GH_TAGNAME}" \
-		BUILD_VENDOR_FLAGS="-mod=vendor -modcacherw" \
 		DEFAULT_CONFIGDIR="${PREFIX}/etc/crowdsec" \
 		DEFAULT_DATADIR="/var/db/crowdsec/data" \
 		BUILD_STATIC=1
@@ -70,11 +68,11 @@ do-install:
 	${LN} -s cscli ${STAGE_BIN}/crowdsec-cli
 
 	@${MKDIR} ${STAGE_PLUGINS}
-	${INSTALL_PROGRAM} ${WRKSRC}/plugins/notifications/email/notification-email ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/plugins/notifications/http/notification-http ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/plugins/notifications/sentinel/notification-sentinel ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/plugins/notifications/slack/notification-slack ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/plugins/notifications/splunk/notification-splunk ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-email/notification-email ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-http/notification-http ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-sentinel/notification-sentinel ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-slack/notification-slack ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-splunk/notification-splunk ${STAGE_PLUGINS}/
 
 	#
 	# Configuration
@@ -106,23 +104,23 @@ do-install:
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/notifications
 
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/notifications/email
-	@${MV} ${WRKSRC}/plugins/notifications/email/email.yaml \
+	@${MV} ${WRKSRC}/cmd/notification-email/email.yaml \
 		${STAGEDIR}${ETCDIR}/notifications/email.yaml.sample
 
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/notifications/http
-	@${MV} ${WRKSRC}/plugins/notifications/http/http.yaml \
+	@${MV} ${WRKSRC}/cmd/notification-http/http.yaml \
 		${STAGEDIR}${ETCDIR}/notifications/http.yaml.sample
 
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/notifications/sentinel
-	@${MV} ${WRKSRC}/plugins/notifications/sentinel/sentinel.yaml \
+	@${MV} ${WRKSRC}/cmd/notification-sentinel/sentinel.yaml \
 		${STAGEDIR}${ETCDIR}/notifications/sentinel.yaml.sample
 
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/notifications/slack
-	@${MV} ${WRKSRC}/plugins/notifications/slack/slack.yaml \
+	@${MV} ${WRKSRC}/cmd/notification-slack/slack.yaml \
 		${STAGEDIR}${ETCDIR}/notifications/slack.yaml.sample
 
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/notifications/splunk
-	@${MV} ${WRKSRC}/plugins/notifications/splunk/splunk.yaml \
+	@${MV} ${WRKSRC}/cmd/notification-splunk/splunk.yaml \
 		${STAGEDIR}${ETCDIR}/notifications/splunk.yaml.sample
 
 	# updated by "cscli machines" at first service start
