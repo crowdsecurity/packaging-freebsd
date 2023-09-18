@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.5.3-rc6
+DISTVERSION=	1.5.3
 PORTREVISION=	1
 CATEGORIES=	security
 
@@ -22,7 +22,7 @@ USES=		gmake pkgconfig go:no_targets
 USE_GITHUB=	yes
 GH_ACCOUNT=	crowdsecurity
 GH_PROJECT=	crowdsec
-GH_TAGNAME=	22146eb3
+GH_TAGNAME=	ce276d38
 
 GO_MODULE=	github.com/${GH_ACCOUNT}/${GH_PROJECT}
 
