@@ -14,7 +14,8 @@ WWW=		https://github.com/crowdsecurity/crowdsec
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-BUILD_DEPENDS=	${LOCALBASE}/lib/libre2.a:devel/re2
+LIB_DEPENDS=	libabsl_base.so:devel/abseil \
+		libre2.so:devel/re2 \
 
 USES=		gmake pkgconfig go:no_targets
 
@@ -31,7 +32,7 @@ MAKE_ARGS=	BUILD_VERSION="${DISTVERSIONPREFIX}${DISTVERSION}-freebsd" \
 		BUILD_TAG="${GH_TAGNAME}" \
 		DEFAULT_CONFIGDIR="${PREFIX}/etc/crowdsec" \
 		DEFAULT_DATADIR="/var/db/crowdsec/data" \
-		BUILD_STATIC=1
+		BUILD_STATIC=0
 
 ALL_TARGET=	build
 
