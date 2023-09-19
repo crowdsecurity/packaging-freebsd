@@ -1,6 +1,8 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.5.3
+# don't pollute distfiles with the vendor tarball, avoid conflicts
+DIST_SUBDIR=	${PORTNAME}/${PORTVERSION}
 CATEGORIES=	security
 
 MASTER_SITES=	https://github.com/${GH_ACCOUNT}/${GH_PROJECT}/releases/download/${DISTVERSIONFULL}/:vendor
@@ -15,7 +17,7 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 LIB_DEPENDS=	libabsl_base.so:devel/abseil \
-		libre2.so:devel/re2 \
+		libre2.so:devel/re2
 
 USES=		gmake pkgconfig go:no_targets
 
