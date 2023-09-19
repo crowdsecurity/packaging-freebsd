@@ -1,5 +1,5 @@
-TIMESTAMP = 1695117077
-SHA256 (crowdsec/1.5.3/vendor.tgz) = 432ffb98e21fab87d8f1a8941a20c62611d68d52565096fdf7f1e617dc670ca6
-SIZE (crowdsec/1.5.3/vendor.tgz) = 15038426
-SHA256 (crowdsec/1.5.3/crowdsecurity-crowdsec-v1.5.3-ce276d38_GH0.tar.gz) = a362ce3879f0e2d033289a86c2ca6b0ae7b4330ad2ff8a806e0c46fe0bbf5985
-SIZE (crowdsec/1.5.3/crowdsecurity-crowdsec-v1.5.3-ce276d38_GH0.tar.gz) = 856385
+TIMESTAMP = 1695127016
+SHA256 (crowdsec/1.5.4/vendor.tgz) = 0d8a3be8a09ff1232362956812c71c37013338e16dd257b06c93148fec2ffc7c
+SIZE (crowdsec/1.5.4/vendor.tgz) = 15039923
+SHA256 (crowdsec/1.5.4/crowdsecurity-crowdsec-v1.5.4-ac01faf4_GH0.tar.gz) = f97a37b6cddbb23069600a3c8f8fd15f0aa7186da33f5ce87352fafcd00d609b
+SIZE (crowdsec/1.5.4/crowdsecurity-crowdsec-v1.5.4-ac01faf4_GH0.tar.gz) = 856411
