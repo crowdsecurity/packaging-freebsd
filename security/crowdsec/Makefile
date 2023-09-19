@@ -52,7 +52,7 @@ STAGE_BIN=	${STAGEDIR}${PREFIX}/bin
 
 # extract the dependencies in the rigth location
 post-extract:
-	tar xfz ${DISTDIR}/vendor.tgz -C ${WRKSRC}
+	tar xfz ${DISTDIR}/${DIST_SUBDIR}/vendor.tgz -C ${WRKSRC}
 
 post-patch:
 	@${REINPLACE_CMD} 's,/etc/crowdsec/,${ETCDIR}/,g' \
