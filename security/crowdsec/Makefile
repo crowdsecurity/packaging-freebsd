@@ -2,12 +2,7 @@ PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.5.4
 # don't pollute distfiles with the vendor tarball, avoid conflicts
-DIST_SUBDIR=	${PORTNAME}/${PORTVERSION}
 CATEGORIES=	security
-
-MASTER_SITES=	https://github.com/${GH_ACCOUNT}/${GH_PROJECT}/releases/download/${DISTVERSIONFULL}/:vendor
-DISTFILES=	vendor.tgz:vendor
-NO_EXTRACT=	vendor.tgz
 
 MAINTAINER=	marco@crowdsec.net
 COMMENT=	CrowdSec lightweight and collaborative security engine
@@ -19,24 +14,24 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 LIB_DEPENDS=	libabsl_base.so:devel/abseil \
 		libre2.so:devel/re2
 
-USES=		gmake pkgconfig go:no_targets
-
-USE_GITHUB=	yes
-GH_ACCOUNT=	crowdsecurity
-GH_PROJECT=	crowdsec
-GH_TAGNAME=	ac01faf4
-
-GO_MODULE=	github.com/${GH_ACCOUNT}/${GH_PROJECT}
-
+USES=		go:modules pkgconfig
+_COMMIT=	ac01faf4
+_BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
-MAKE_ARGS=	BUILD_VERSION="${DISTVERSIONPREFIX}${DISTVERSION}-freebsd" \
-		BUILD_TAG="${GH_TAGNAME}" \
-		DEFAULT_CONFIGDIR="${PREFIX}/etc/crowdsec" \
-		DEFAULT_DATADIR="/var/db/crowdsec/data" \
-		BUILD_STATIC=0
+GO_MODULE=	github.com/crowdsecurity/crowdsec
+GO_TARGET=	./cmd/crowdsec ./cmd/crowdsec-cli ./cmd/notification-email ./cmd/notification-http ./cmd/notification-sentinel ./cmd/notification-slack ./cmd/notification-splunk
 
-ALL_TARGET=	build
+GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_cgo \
+		-ldflags="\
+		-a -s -w \
+		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION}-freebsd \
+		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
+		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT} \
+		-X $(GO_MODULE)/pkg/cwversion.Codename=alphaga \
+		-X $(GO_MODULE)/pkg/csconfig.defaultConfigDir=${PREFIX}/etc/crowdsec \
+		-X $(GO_MODULE)/pkg/csconfig.defaultDataDir=/var/db/crowdsec/data \
+		-X $(GO_MODULE)/pkg/cwversion.Libre2=C++"
 
 SUB_FILES=	pkg-deinstall pkg-install pkg-message crowdsec.cron upgrade-hub
 
@@ -50,10 +45,6 @@ PLUGIN_DIR=	${PREFIX}/lib/crowdsec/plugins
 STAGE_PLUGINS=	${STAGEDIR}${PLUGIN_DIR}
 STAGE_BIN=	${STAGEDIR}${PREFIX}/bin
 
-# extract the dependencies in the rigth location
-post-extract:
-	tar xfz ${DISTDIR}/${DIST_SUBDIR}/vendor.tgz -C ${WRKSRC}
-
 post-patch:
 	@${REINPLACE_CMD} 's,/etc/crowdsec/,${ETCDIR}/,g' \
 		${WRKSRC}/config/config.yaml
@@ -66,16 +57,18 @@ do-install:
 	# Binaries
 	#
 
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/crowdsec/crowdsec ${STAGE_BIN}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/crowdsec-cli/cscli ${STAGE_BIN}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec ${STAGE_BIN}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec-cli ${STAGE_BIN}/cscli
+
+	# keep this around for compatibility
 	${LN} -s cscli ${STAGE_BIN}/crowdsec-cli
 
 	@${MKDIR} ${STAGE_PLUGINS}
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-email/notification-email ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-http/notification-http ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-sentinel/notification-sentinel ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-slack/notification-slack ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-splunk/notification-splunk ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-email ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-http ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-sentinel ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-slack ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-splunk ${STAGE_PLUGINS}/
 
 	#
 	# Configuration
