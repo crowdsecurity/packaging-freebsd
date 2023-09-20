@@ -22,7 +22,7 @@ USE_RC_SUBR=	crowdsec
 GO_MODULE=	github.com/crowdsecurity/crowdsec
 GO_TARGET=	./cmd/crowdsec ./cmd/crowdsec-cli ./cmd/notification-email ./cmd/notification-http ./cmd/notification-sentinel ./cmd/notification-slack ./cmd/notification-splunk
 
-GO_BUILDFLAGS=	-trimpath -tags netgo \
+GO_BUILDFLAGS=	-trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_cgo \
 		-ldflags="\
 		-a -s -w \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION}-freebsd \
@@ -30,7 +30,8 @@ GO_BUILDFLAGS=	-trimpath -tags netgo \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT} \
 		-X $(GO_MODULE_NAME)/pkg/cwversion.Codename=alphaga \
 		-X $(GO_MODULE_NAME)/pkg/csconfig.defaultConfigDir=${PREFIX}/etc/crowdsec \
-		-X $(GO_MODULE_NAME)/pkg/csconfig.defaultDataDir=/var/db/crowdsec/data"
+		-X $(GO_MODULE_NAME)/pkg/csconfig.defaultDataDir=/var/db/crowdsec/data \
+		-X $(GO_MODULE_NAME)/pkg/cwversion.Libre2=C++"
 
 SUB_FILES=	pkg-deinstall pkg-install pkg-message crowdsec.cron upgrade-hub
 
