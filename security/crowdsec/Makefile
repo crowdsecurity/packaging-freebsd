@@ -56,15 +56,15 @@ do-install:
 	# Binaries
 	#
 
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/crowdsec/crowdsec ${STAGE_BIN}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/crowdsec-cli/crowdsec-cli ${STAGE_BIN}/cscli
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec ${STAGE_BIN}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec-cli ${STAGE_BIN}/cscli
 
 	@${MKDIR} ${STAGE_PLUGINS}
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-email/notification-email ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-http/notification-http ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-sentinel/notification-sentinel ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-slack/notification-slack ${STAGE_PLUGINS}/
-	${INSTALL_PROGRAM} ${WRKSRC}/cmd/notification-splunk/notification-splunk ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-email ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-http ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-sentinel ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-slack ${STAGE_PLUGINS}/
+	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-splunk ${STAGE_PLUGINS}/
 
 	#
 	# Configuration
