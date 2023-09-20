@@ -11,8 +11,7 @@ WWW=		https://github.com/crowdsecurity/crowdsec
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-LIB_DEPENDS=	libabsl_base.so:devel/abseil \
-		libre2.so:devel/re2
+LIB_DEPENDS=	libre2.so:devel/re2
 
 USES=		go:modules pkgconfig
 _COMMIT=	e4dcdd25
