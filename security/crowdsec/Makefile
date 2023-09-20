@@ -58,6 +58,7 @@ do-install:
 
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec ${STAGE_BIN}/
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec-cli ${STAGE_BIN}/cscli
+	${LN} -s cscli ${STAGE_BIN}/crowdsec-cli
 
 	@${MKDIR} ${STAGE_PLUGINS}
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/notification-email ${STAGE_PLUGINS}/
