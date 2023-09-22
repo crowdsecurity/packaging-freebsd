@@ -1,7 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.5.4
-# don't pollute distfiles with the vendor tarball, avoid conflicts
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
