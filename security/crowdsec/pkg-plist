@@ -49,5 +49,6 @@ lib/crowdsec/plugins/notification-sentinel
 lib/crowdsec/plugins/notification-slack
 lib/crowdsec/plugins/notification-splunk
 @dir %%ETCDIR%%/hub
+@dir %%ETCDIR%%/context
 @dir /var/db/crowdsec/data
 @dir /var/db/crowdsec

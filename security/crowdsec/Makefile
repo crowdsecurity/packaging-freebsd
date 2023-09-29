@@ -130,6 +130,7 @@ do-install:
 	#
 
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/hub
+	@${MKDIR} ${STAGEDIR}${ETCDIR}/context
 	@${MKDIR} ${STAGEDIR}/var/db/crowdsec/data
 
 	#
