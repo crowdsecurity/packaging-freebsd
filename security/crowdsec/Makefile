@@ -12,7 +12,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 LIB_DEPENDS=	libre2.so:devel/re2
 
-USES=		go:modules pkgconfig
+USES=		go:1.21,modules pkgconfig
 _COMMIT=	d2d788c5
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
