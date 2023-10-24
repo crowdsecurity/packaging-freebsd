@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.5.4
+DISTVERSION=	1.5.5
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -13,7 +13,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 LIB_DEPENDS=	libre2.so:devel/re2
 
 USES=		go:modules pkgconfig
-_COMMIT=	e4dcdd25
+_COMMIT=	d2d788c5
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
@@ -130,7 +130,6 @@ do-install:
 	#
 
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/hub
-	@${MKDIR} ${STAGEDIR}${ETCDIR}/context
 	@${MKDIR} ${STAGEDIR}/var/db/crowdsec/data
 
 	#
