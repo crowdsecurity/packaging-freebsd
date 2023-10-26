@@ -1,10 +1,13 @@
 #!/bin/sh
 
 case $2 in
-        "POST-INSTALL")
-                if [ -e /var/run/crowdsec.running ]; then
-                        service crowdsec start
-                        rm -f /var/run/crowdsec.running
-                fi
-                ;;
+"POST-INSTALL")
+	if [ -e /var/run/crowdsec.running ]; then
+		if service crowdsec enabled >/dev/null 2>&1; then
+			service crowdsec start && rm -f /var/run/crowdsec.running
+		else
+			service crowdsec onestart && rm -f /var/run/crowdsec.running
+		fi
+	fi
+	;;
 esac
