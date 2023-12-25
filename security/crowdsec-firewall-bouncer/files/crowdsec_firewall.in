@@ -49,7 +49,7 @@ crowdsec_firewall_precmd() {
             # THEN, register it to the local API
             API_KEY=$($CSCLI bouncers add "${crowdsec_firewall_name}" -o raw)
             if [ -n "$API_KEY" ]; then
-                sed -i "" "s|^${orig_line}|api_key: ${API_KEY}     # ${crowdsec_firewall_name}|" "${crowdsec_firewall_config}"
+                sed -i "" "s|^${orig_line}|api_key: '${API_KEY}'|" "${crowdsec_firewall_config}"
                 echo "Registered: ${crowdsec_firewall_name}"
             fi
         fi
