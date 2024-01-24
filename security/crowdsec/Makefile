@@ -151,10 +151,10 @@ do-install:
 	@${RM} ${STAGEDIR}${ETCDIR}/config_win.yaml
 	@${RM} ${STAGEDIR}${ETCDIR}/crowdsec.cron.daily
 	@${RM} ${STAGEDIR}${ETCDIR}/crowdsec.service
+	@${RM} ${STAGEDIR}${ETCDIR}/context.yaml
+	@${RM} ${STAGEDIR}${ETCDIR}/detect.yaml
 	@${RM} ${STAGEDIR}${ETCDIR}/dev.yaml
 	@${RM} ${STAGEDIR}${ETCDIR}/user.yaml
-	@${RM} ${STAGEDIR}${ETCDIR}/detect.yaml
-	@${RM} ${STAGEDIR}${ETCDIR}/context.yaml
 	@${RMDIR} ${STAGEDIR}${ETCDIR}/notifications/email
 	@${RMDIR} ${STAGEDIR}${ETCDIR}/notifications/http
 	@${RMDIR} ${STAGEDIR}${ETCDIR}/notifications/sentinel
