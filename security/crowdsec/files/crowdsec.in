@@ -58,8 +58,8 @@ crowdsec_precmd() {
     # Is the LAPI enabled on this node?
     if [ "$(cs_cli config show --key Config.API.Server.Enable)" != "false" ]; then
 
-        # Create local credentials if missing
-        if [ ! -f "$(cs_cli show --key Config.API.Client.CredentialsFilePath)" ]; then
+        # There are no machines, we create the main one
+        if [ "$(cs_cli machines list -o json)" = "[]" ]; then
             echo "Registering LAPI"
             cs_cli machines add "${crowdsec_machine_name}" --auto --force --error || :
         fi
