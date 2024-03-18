@@ -1,6 +1,7 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.6.0
+PORTREVISION=	2
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -19,7 +20,13 @@ _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
 GO_MODULE=	github.com/crowdsecurity/crowdsec
-GO_TARGET=	./cmd/crowdsec ./cmd/crowdsec-cli ./cmd/notification-email ./cmd/notification-http ./cmd/notification-sentinel ./cmd/notification-slack ./cmd/notification-splunk
+GO_TARGET=	./cmd/crowdsec \
+		./cmd/crowdsec-cli \
+		./cmd/notification-email \
+		./cmd/notification-http \
+		./cmd/notification-sentinel \
+		./cmd/notification-slack \
+		./cmd/notification-splunk
 
 GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_cgo \
 		-ldflags="\
@@ -27,10 +34,10 @@ GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION}-freebsd \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT} \
-		-X $(GO_MODULE)/pkg/cwversion.Codename=alphaga \
-		-X $(GO_MODULE)/pkg/csconfig.defaultConfigDir=${PREFIX}/etc/crowdsec \
-		-X $(GO_MODULE)/pkg/csconfig.defaultDataDir=/var/db/crowdsec/data \
-		-X $(GO_MODULE)/pkg/cwversion.Libre2=C++"
+		-X ${GO_MODULE}/pkg/cwversion.Codename=alphaga \
+		-X ${GO_MODULE}/pkg/csconfig.defaultConfigDir=${PREFIX}/etc/crowdsec \
+		-X ${GO_MODULE}/pkg/csconfig.defaultDataDir=/var/db/crowdsec/data \
+		-X ${GO_MODULE}/pkg/cwversion.Libre2=C++"
 
 SUB_FILES=	pkg-deinstall pkg-install pkg-message crowdsec.cron upgrade-hub
 
