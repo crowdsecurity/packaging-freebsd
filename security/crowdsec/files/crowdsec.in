@@ -39,7 +39,27 @@ command_args="-P ${pidfile} -p ${pidfile_crowdsec} -r -R 10 -t \"${name}\" -- ${
 reload_cmd="${name}_reload"
 start_precmd="${name}_precmd"
 configtest_cmd="${name}_configtest"
+reload_precmd="${name}_configtest"
+restart_precmd="${name}_configtest"
+stop_precmd="${name}_stop_precmd"
+stop_postcmd="${name}_stop_postcmd"
 extra_commands="configtest reload"
+
+crowdsec_stop_precmd() {
+    # take note of the pid, because sbin/daemon will remove the file
+    # without waiting for crowdsec to exit
+    if [ -r "$pidfile_crowdsec" ]; then
+        _CROWDSECPID="$(check_pidfile "$pidfile_crowdsec" "$command_crowdsec")"
+        export _CROWDSECPID
+    fi
+}
+
+crowdsec_stop_postcmd() {
+    # wait for process to exit before restarting, or it will find the http port in use
+    if [ -n "$_CROWDSECPID" ]; then
+        wait_for_pids "$_CROWDSECPID"
+    fi
+}
 
 crowdsec_precmd() {
     cs_cli() {
@@ -81,10 +101,12 @@ crowdsec_configtest()
     echo "Configuration test OK"
 }
 
-crowdsec_reload() {
-    crowdsec_configtest
+crowdsec_reload()
+{
     echo "Reloading configuration"
-    kill -HUP "$(cat "$pidfile_crowdsec")"
+    if [ -r "$pidfile_crowdsec" ]; then
+        kill -HUP "$(check_pidfile "$pidfile_crowdsec" "${command_crowdsec}")"
+    fi
 }
 
 run_rc_command "$1"
