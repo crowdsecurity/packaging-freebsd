@@ -14,11 +14,11 @@ starting the service.
 Please refer to the documentation at
 https://docs.crowdsec.net/docs/bouncers/blocklist-mirror/
 
-Then activate the bouncer via sysrc and run it:
+Then activate the bouncer service and run it:
 
 ----------
-# sysrc crowdsec_mirror_enable="YES"
-crowdsec_mirror_enable: NO -> YES
+# service crowwdsec_mirror_enable
+crowdsec_mirror enabled in /etc/rc.conf
 # service crowdsec_mirror start
 ----------
 
