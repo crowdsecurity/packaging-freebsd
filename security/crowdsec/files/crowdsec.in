@@ -73,7 +73,7 @@ crowdsec_precmd() {
     # Is the LAPI enabled on this node?
     if [ "$(Config API.Server.Enable)" != "false" ]; then
         # There are no machines, we create one for cscli & log processor
-        if [ "$(cs_cli machines list -o json)" = "[]" ]; then
+        if [ "$(cs_cli machines list -o json --error)" = "[]" ]; then
             echo "Registering LAPI"
             cs_cli machines add "${crowdsec_machine_name}" --auto --force --error || :
         fi
