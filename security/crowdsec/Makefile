@@ -1,7 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.6.1
-PORTREVISION=	1
+DISTVERSION=	1.6.2
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -14,8 +13,8 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 LIB_DEPENDS=	libabsl_base.so:devel/abseil \
 		libre2.so:devel/re2
 
-USES=		go:1.21,modules pkgconfig
-_COMMIT=	0746e0c0
+USES=		go:1.22,modules pkgconfig
+_COMMIT=	7d6514c7
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
