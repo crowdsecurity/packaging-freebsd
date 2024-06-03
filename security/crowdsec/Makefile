@@ -14,7 +14,7 @@ LIB_DEPENDS=	libabsl_base.so:devel/abseil \
 		libre2.so:devel/re2
 
 USES=		go:1.22,modules pkgconfig
-_COMMIT=	7d6514c7
+_COMMIT=	16bfab86
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
