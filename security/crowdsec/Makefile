@@ -141,6 +141,7 @@ do-install:
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/hub
 	@${MKDIR} ${STAGEDIR}${ETCDIR}/acquis.d
 	@${MKDIR} ${STAGEDIR}/var/db/crowdsec/data
+	@${MKDIR} ${STAGEDIR}/var/db/crowdsec/data/trace
 
 	#
 	# Cron
