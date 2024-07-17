@@ -1,8 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.6.2
-# the remote tag was moved for 1.6.2, so we force another tag to avoid the version on proxy.golang.org
-DISTVERSIONSUFFIX=     -final
+DISTVERSION=	1.6.3-rc1
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -15,8 +13,8 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 LIB_DEPENDS=	libabsl_base.so:devel/abseil \
 		libre2.so:devel/re2
 
-USES=		go:1.22,modules pkgconfig
-_COMMIT=	16bfab86
+USES=		go:modules pkgconfig
+_COMMIT=	206211ce
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
