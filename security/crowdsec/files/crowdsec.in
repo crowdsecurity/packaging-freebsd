@@ -49,6 +49,10 @@ crowdsec_stop_precmd() {
         _CROWDSECPID="$(check_pidfile "$pidfile_crowdsec" "$command_crowdsec")"
         export _CROWDSECPID
     fi
+    # If the crowdsec process was not started or is in a fail loop due to misconfiguration,
+    # the TERM signal is not enough to terminate /usr/sbin/daemon.
+    echo "/usr/sbin/daemon is running but CrowdSec is not, forcing QUIT signal."
+    sig_stop="QUIT"
 }
 
 crowdsec_stop_postcmd() {
