@@ -42,6 +42,10 @@ stop_precmd="${name}_stop_precmd"
 stop_postcmd="${name}_stop_postcmd"
 extra_commands="configtest reload"
 
+# If the crowdsec process was not started or is in a fail loop due to misconfiguration,
+# the TERM signal is not enough to terminate /usr/sbin/daemon.
+sig_stop="INT"
+
 crowdsec_stop_precmd() {
     # take note of the pid, because sbin/daemon will remove the file
     # without waiting for crowdsec to exit
@@ -49,10 +53,6 @@ crowdsec_stop_precmd() {
         _CROWDSECPID="$(check_pidfile "$pidfile_crowdsec" "$command_crowdsec")"
         export _CROWDSECPID
     fi
-    # If the crowdsec process was not started or is in a fail loop due to misconfiguration,
-    # the TERM signal is not enough to terminate /usr/sbin/daemon.
-    echo "/usr/sbin/daemon is running but CrowdSec is not, forcing INT signal."
-    sig_stop="INT"
 }
 
 crowdsec_stop_postcmd() {
