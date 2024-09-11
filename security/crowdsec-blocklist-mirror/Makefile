@@ -1,7 +1,6 @@
 PORTNAME=	crowdsec-blocklist-mirror
 DISTVERSIONPREFIX=	v
-DISTVERSION=	0.0.3-rc2
-PORTREVISION=	2
+DISTVERSION=	0.0.3
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -12,7 +11,7 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:modules
-_COMMIT=	63d1180
+_COMMIT=	a7871e6e
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec_mirror
 

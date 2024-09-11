@@ -22,7 +22,7 @@ name=crowdsec_mirror
 desc="Crowdsec Blocklist Mirror"
 rcvar=crowdsec_mirror_enable
 
-load_rc_config $name
+load_rc_config "$name"
 
 : "${crowdsec_mirror_enable:=NO}"
 : "${crowdsec_mirror_config:=%%ETCDIR%%/crowdsec-blocklist-mirror.yaml}"

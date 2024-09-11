@@ -1,7 +1,6 @@
 PORTNAME=	crowdsec-firewall-bouncer
-PORTREVISION=	3
 DISTVERSIONPREFIX=	v
-DISTVERSION=	0.0.28
+DISTVERSION=	0.0.29
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -11,8 +10,8 @@ WWW=		https://github.com/crowdsecurity/cs-firewall-bouncer
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-USES=		go:modules
-_COMMIT=	af6e7e2
+USES=		go:1.22,modules
+_COMMIT=	9594360c
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec_firewall
 
