@@ -19,12 +19,13 @@ GO_MODULE=	github.com/crowdsecurity/cs-firewall-bouncer
 GO_TARGET=	${PORTNAME}:./${PORTNAME}
 GO_BUILDFLAGS=	-trimpath -tags netgo \
 		-ldflags="\
-		-a -s -w -extldflags '-static' \
+		-a -s -w \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION}-freebsd \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT}"
 
-CGO_ENABLED=	0
+# to allow WITH_PIE with a non PIC libc
+CGO_ENABLED=	1
 
 SUB_FILES=	pkg-deinstall \
 		pkg-install \
