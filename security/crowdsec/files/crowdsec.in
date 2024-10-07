@@ -66,8 +66,8 @@ crowdsec_stop_postcmd() {
         wait_for_pids "$_CROWDSECPID"
     fi
     if [ -n "$_CROWDSEC_CHILDREN" ]; then
-        kill -TERM "$_CROWDSEC_CHILDREN" 2>/dev/null
-        wait_for_pids "$_CROWDSEC_CHILDREN"
+        kill -TERM $_CROWDSEC_CHILDREN 2>/dev/null
+        wait_for_pids $_CROWDSEC_CHILDREN
     fi
 }
 
