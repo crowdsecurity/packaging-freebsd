@@ -2,7 +2,7 @@ PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
 DISTVERSION=	1.6.3
 CATEGORIES=	security
-PORTREVISION=   1
+PORTREVISION=   2
 
 MAINTAINER=	marco@crowdsec.net
 COMMENT=	CrowdSec lightweight and collaborative security engine
@@ -30,7 +30,7 @@ GO_TARGET=	./cmd/crowdsec \
 
 GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_cgo \
 		-ldflags="\
-		-a -s \
+		-a -s -w \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION} \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT} \
