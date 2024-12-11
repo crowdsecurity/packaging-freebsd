@@ -20,7 +20,7 @@ GO_TARGET=	${PORTNAME}:./${PORTNAME}
 GO_BUILDFLAGS=	-trimpath -tags netgo \
 		-ldflags="\
 		-a -s -w \
-		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION}-freebsd \
+		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION}-freebsd \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT}"
 

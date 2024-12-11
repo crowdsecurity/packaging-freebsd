@@ -30,7 +30,7 @@ GO_TARGET=	./cmd/crowdsec \
 GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_cgo \
 		-ldflags="\
 		-a -s -w \
-		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION} \
+		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION} \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT} \
 		-X ${GO_MODULE}/pkg/cwversion.Codename=alphaga \
