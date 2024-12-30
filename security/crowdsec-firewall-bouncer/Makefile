@@ -27,7 +27,7 @@ GO_BUILDFLAGS=	-trimpath -tags netgo \
 		-a -s -w \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION}-freebsd \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
-		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${GH_TAGNAME:C/^(.{7}).*/\1/}"
+		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${GH_TAGNAME}"
 
 # to allow WITH_PIE with a non PIC libc
 CGO_ENABLED=	1
