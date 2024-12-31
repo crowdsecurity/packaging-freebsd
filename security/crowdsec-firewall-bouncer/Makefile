@@ -1,6 +1,7 @@
 PORTNAME=	crowdsec-firewall-bouncer
 DISTVERSIONPREFIX=	v
 DISTVERSION=	0.0.31
+PORTREVISION=	1
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -11,18 +12,22 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:modules
-_COMMIT=	2884c0f0
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec_firewall
+
+USE_GITHUB=	yes
+GH_ACCOUNT=	crowdsecurity
+GH_PROJECT=	cs-firewall-bouncer
+GH_TAGNAME=	ca4cc008e89045ba266f94bbb36bfda6d8acdc8c
 
 GO_MODULE=	github.com/crowdsecurity/cs-firewall-bouncer
 GO_TARGET=	${PORTNAME}:./${PORTNAME}
 GO_BUILDFLAGS=	-trimpath -tags netgo \
 		-ldflags="\
-		-a -s -w \
+		-a -s \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION}-freebsd \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
-		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT}"
+		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${GH_TAGNAME}"
 
 # to allow WITH_PIE with a non PIC libc
 CGO_ENABLED=	1
