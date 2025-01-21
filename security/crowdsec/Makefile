@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.6.4
+DISTVERSION=	1.6.5-rc1
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -14,9 +14,13 @@ LIB_DEPENDS=	libabsl_base.so:devel/abseil \
 		libre2.so:devel/re2
 
 USES=		go:1.23,modules pkgconfig
-_COMMIT=	523164f6
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
+
+USE_GITHUB=	yes
+GH_ACCOUNT=	crowdsecurity
+GH_PROJECT=	crowdsec
+GH_TAGNAME=	1b5514c9
 
 GO_MODULE=	github.com/crowdsecurity/crowdsec
 GO_TARGET=	./cmd/crowdsec \
@@ -32,7 +36,7 @@ GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_
 		-a -s \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION} \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
-		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT} \
+		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${GH_TAGNAME} \
 		-X ${GO_MODULE}/pkg/cwversion.Codename=alphaga \
 		-X ${GO_MODULE}/pkg/csconfig.defaultConfigDir=${PREFIX}/etc/crowdsec \
 		-X ${GO_MODULE}/pkg/csconfig.defaultDataDir=/var/db/crowdsec/data \
