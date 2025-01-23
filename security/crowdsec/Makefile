@@ -20,7 +20,7 @@ USE_RC_SUBR=	crowdsec
 USE_GITHUB=	yes
 GH_ACCOUNT=	crowdsecurity
 GH_PROJECT=	crowdsec
-GH_TAGNAME=	1b5514c9
+GH_TAGNAME=	4935dc53
 
 GO_MODULE=	github.com/crowdsecurity/crowdsec
 GO_TARGET=	./cmd/crowdsec \
