@@ -1,7 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.6.5-rc1
-PORTREVISION=	1
+DISTVERSION=	1.6.5-rc3
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -21,7 +20,7 @@ USE_RC_SUBR=	crowdsec
 USE_GITHUB=	yes
 GH_ACCOUNT=	crowdsecurity
 GH_PROJECT=	crowdsec
-GH_TAGNAME=	4935dc53
+GH_TAGNAME=	bfed861b
 
 GO_MODULE=	github.com/crowdsecurity/crowdsec
 GO_TARGET=	./cmd/crowdsec \
