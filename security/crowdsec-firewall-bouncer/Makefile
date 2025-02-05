@@ -15,7 +15,6 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 USES=		go:modules
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec_firewall
-
 _COMMIT=	fb1fb6cb
 
 GO_MODULE=	github.com/crowdsecurity/cs-firewall-bouncer

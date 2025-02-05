@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.6.5-rc3
+DISTVERSION=	1.6.5-rc5
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -16,11 +16,7 @@ LIB_DEPENDS=	libabsl_base.so:devel/abseil \
 USES=		go:1.23,modules pkgconfig
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
-
-USE_GITHUB=	yes
-GH_ACCOUNT=	crowdsecurity
-GH_PROJECT=	crowdsec
-GH_TAGNAME=	bfed861b
+_COMMIT=	c7ef2a9a
 
 GO_MODULE=	github.com/crowdsecurity/crowdsec
 GO_TARGET=	./cmd/crowdsec \
