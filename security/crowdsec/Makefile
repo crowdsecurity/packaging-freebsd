@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.6.6-rc5
+DISTVERSION=	1.6.6
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
