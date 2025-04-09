@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec-blocklist-mirror
 DISTVERSIONPREFIX=	v
-DISTVERSION=	0.0.3
+DISTVERSION=	0.0.5
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -11,16 +11,16 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:modules
-_COMMIT=	a7871e6e
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec_mirror
+_COMMIT=	f33db07e
 
 GO_MODULE=	github.com/crowdsecurity/cs-blocklist-mirror
 GO_TARGET=	${PORTNAME}:./${PORTNAME}
 GO_BUILDFLAGS=	-trimpath -tags netgo \
 		-ldflags="\
-		-a -s -w -extldflags '-static' \
-		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${DISTVERSION}-freebsd \
+		-a -s -extldflags '-static' \
+		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION}-freebsd \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT}"
 

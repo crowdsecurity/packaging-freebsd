@@ -1,5 +1,5 @@
-TIMESTAMP = 1724073365
-SHA256 (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.3/v0.0.3.mod) = 75b9b7f97f4f2fd4f0e27da7fc4e63013bc342dc1e48ef98e8dfba9617b27bd7
-SIZE (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.3/v0.0.3.mod) = 2265
-SHA256 (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.3/v0.0.3.zip) = f67d5ecd9a572722fba1366b477d92f19aa142cca9f8404bceb4f1d9a7a8b359
-SIZE (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.3/v0.0.3.zip) = 266748
+TIMESTAMP = 1744210894
+SHA256 (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.5/v0.0.5.mod) = bb27e8a36ad205520863d0b3eb1881b8669fdf7fadbae2e4d017c91012e33866
+SIZE (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.5/v0.0.5.mod) = 2361
+SHA256 (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.5/v0.0.5.zip) = 10a13975776bc7fb9ace3eb19c3f66151a01588850ecb21caeb6629d4630a00b
+SIZE (go/security_crowdsec-blocklist-mirror/crowdsec-blocklist-mirror-v0.0.5/v0.0.5.zip) = 271240
