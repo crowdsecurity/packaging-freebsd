@@ -85,6 +85,9 @@ do-install:
 	@${MV} ${STAGEDIR}${ETCDIR}/acquis.yaml \
 		${STAGEDIR}${ETCDIR}/acquis.yaml.sample
 
+	${INSTALL_DATA} ${FILESDIR}/acquis.yaml.sample \
+		${STAGEDIR}${ETCDIR}/acquis.yaml.sample
+
 	@${MV} ${STAGEDIR}${ETCDIR}/config.yaml \
 		${STAGEDIR}${ETCDIR}/config.yaml.sample
 
