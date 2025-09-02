@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.6.11
+DISTVERSION=	1.7.0
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -11,7 +11,7 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:modules pkgconfig
-_COMMIT=	d64ee2ae
+_COMMIT=	c3036e21
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
@@ -80,6 +80,9 @@ do-install:
 	@(cd ${WRKSRC}/config && ${COPYTREE_SHARE} . ${STAGEDIR}${ETCDIR})
 
 	@${MV} ${STAGEDIR}${ETCDIR}/acquis.yaml \
+		${STAGEDIR}${ETCDIR}/acquis.yaml.sample
+
+	${INSTALL_DATA} ${FILESDIR}/acquis.yaml.sample \
 		${STAGEDIR}${ETCDIR}/acquis.yaml.sample
 
 	@${MV} ${STAGEDIR}${ETCDIR}/config.yaml \
