@@ -161,6 +161,7 @@ do-install:
 	@${RM} ${STAGEDIR}${ETCDIR}/context.yaml
 	@${RM} ${STAGEDIR}${ETCDIR}/detect.yaml
 	@${RM} ${STAGEDIR}${ETCDIR}/dev.yaml
+	@${RM} ${STAGEDIR}${ETCDIR}/windows-dev.yaml
 	@${RM} ${STAGEDIR}${ETCDIR}/user.yaml
 	@${RMDIR} ${STAGEDIR}${ETCDIR}/notifications/email
 	@${RMDIR} ${STAGEDIR}${ETCDIR}/notifications/http
