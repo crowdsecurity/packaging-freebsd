@@ -1,7 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.7.3
-PORTREVISION=	1
+DISTVERSION=	1.7.4
 CATEGORIES=	security
 
 MAINTAINER=	marco@crowdsec.net
@@ -12,7 +11,7 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:1.25,modules pkgconfig
-_COMMIT=	c8aad699
+_COMMIT=	4fb05c73
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
