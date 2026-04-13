@@ -3,7 +3,7 @@ DISTVERSIONPREFIX=	v
 DISTVERSION=	1.7.7
 CATEGORIES=	security
 
-MAINTAINER=	marco@crowdsec.net
+MAINTAINER=	manuel@crowdsec.net
 COMMENT=	CrowdSec lightweight and collaborative security engine
 WWW=		https://github.com/crowdsecurity/crowdsec
 
@@ -13,7 +13,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 LIB_DEPENDS=	libabsl_base.so:devel/abseil \
 		libre2.so:devel/re2
 
-USES=		go:modules pkgconfig
+USES=		go:1.25+,modules pkgconfig
 _COMMIT=	eacc8192
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
