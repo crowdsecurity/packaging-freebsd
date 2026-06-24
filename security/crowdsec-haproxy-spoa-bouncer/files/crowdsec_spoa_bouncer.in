@@ -1,0 +1,101 @@
+#!/bin/sh
+#
+# PROVIDE: crowdsec_spoa_bouncer
+# REQUIRE: LOGIN DAEMON NETWORKING
+# KEYWORD: shutdown
+#
+# Add the following lines to /etc/rc.conf.local or /etc/rc.conf
+# to enable this service:
+#
+# crowdsec_spoa_bouncer_enable (bool):	Set it to YES to enable the bouncer.
+#					Default is "NO"
+# crowdsec_spoa_bouncer_config (str):	Set the config path.
+#					Default is "%%ETCDIR%%/crowdsec-spoa-bouncer.yaml"
+# crowdsec_spoa_bouncer_name (str):	Name of the bouncer to register.
+#					Default is dynamically generated.
+# crowdsec_spoa_bouncer_flags (str):	extra flags to run bouncer.
+#					Default is ""
+
+. /etc/rc.subr
+
+name=crowdsec_spoa_bouncer
+desc="CrowdSec HAProxy SPOA bouncer"
+rcvar=crowdsec_spoa_bouncer_enable
+
+load_rc_config "$name"
+
+: "${crowdsec_spoa_bouncer_enable:=NO}"
+: "${crowdsec_spoa_bouncer_config:=%%ETCDIR%%/crowdsec-spoa-bouncer.yaml}"
+: "${crowdsec_spoa_bouncer_name:=cs-haproxy-spoa-bouncer-$(date +%s)}"
+: "${crowdsec_spoa_bouncer_flags:=}"
+
+pidfile=/var/run/${name}.pid
+required_files="$crowdsec_spoa_bouncer_config"
+command="%%PREFIX%%/bin/crowdsec-spoa-bouncer"
+start_cmd="${name}_start"
+stop_cmd="${name}_stop"
+start_precmd="${name}_precmd"
+configtest_cmd="${name}_configtest"
+extra_commands="configtest"
+
+crowdsec_spoa_bouncer_precmd() {
+    CSCLI=%%PREFIX%%/bin/cscli
+    orig_line="api_key: .*\${API_KEY}.*"
+
+    install -d -m 0755 /var/run/crowdsec-spoa
+
+    # IF the bouncer is not configured
+    if grep -q "^${orig_line}" "${crowdsec_spoa_bouncer_config}"; then
+        # AND crowdsec is installed..
+        if command -v "$CSCLI" >/dev/null; then
+            # THEN, register it to the local API
+            API_KEY="$($CSCLI bouncers add "${crowdsec_spoa_bouncer_name}" -o raw)"
+            if [ -n "$API_KEY" ]; then
+                sed -i "" "s|^${orig_line}|api_key: '${API_KEY}'|" "${crowdsec_spoa_bouncer_config}"
+                echo "Registered: ${crowdsec_spoa_bouncer_name}"
+            fi
+        fi
+    fi
+}
+
+crowdsec_spoa_bouncer_stop()
+{
+    if [ ! -f "$pidfile" ]; then
+        echo "${name} is not running."
+        return
+    fi
+    pid=$(cat "$pidfile")
+    if kill -0 "$pid" >/dev/null 2>&1; then
+        echo "Stopping ${name}."
+        kill -s TERM "$pid" >/dev/null 2>&1
+        # shellcheck disable=SC2034
+        for i in $(seq 1 20); do
+            sleep 1
+            if ! kill -0 "$pid" >/dev/null 2>&1; then
+                rm -f "$pidfile"
+                return
+            fi
+        done
+        echo "Timeout, terminating ${name} with SIGKILL."
+        kill -s KILL "$pid" >/dev/null 2>&1
+        rm -f "$pidfile"
+    else
+        echo "${name} is not running."
+    fi
+}
+
+crowdsec_spoa_bouncer_start() {
+    # shellcheck disable=SC2086
+    /usr/sbin/daemon -f -p "$pidfile" -t "$desc" -- \
+        "$command" -c "$crowdsec_spoa_bouncer_config" ${crowdsec_spoa_bouncer_flags}
+}
+
+crowdsec_spoa_bouncer_configtest()
+{
+    echo "Performing sanity check on ${name} configuration."
+    if "$command" -c "$crowdsec_spoa_bouncer_config" -t; then
+        echo "Configuration test OK"
+    fi
+}
+
+run_rc_command "$1"

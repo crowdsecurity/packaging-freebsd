@@ -1,0 +1,11 @@
+--- config/crowdsec-spoa-bouncer.yaml.orig	2026-01-19 00:00:00 UTC
++++ config/crowdsec-spoa-bouncer.yaml
+@@ -16,7 +16,7 @@ insecure_skip_verify: false
+ ## SPOA listener configuration
+ # Configure TCP and/or Unix socket listeners
+ listen_tcp: 0.0.0.0:9000
+-listen_unix: /run/crowdsec-spoa/spoa.sock
++listen_unix: /var/run/crowdsec-spoa/spoa.sock
+ 
+ #asn_database_path: /var/lib/crowdsec/data/GeoLite2-ASN.mmdb
+ #city_database_path: /var/lib/crowdsec/data/GeoLite2-City.mmdb

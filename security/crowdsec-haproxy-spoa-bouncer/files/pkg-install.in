@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case $2 in
+        "POST-INSTALL")
+                if [ -e /var/run/crowdsec_spoa_bouncer.running ]; then
+                        service crowdsec_spoa_bouncer start
+                        rm -f /var/run/crowdsec_spoa_bouncer.running
+                fi
+                ;;
+esac

@@ -1,0 +1,30 @@
+[
+{ type: install
+  message: <<EOM
+
+crowdsec-haproxy-spoa-bouncer is installed.
+
+If you are running crowdsec on this machine, the bouncer will register itself with
+the Local API when it's started the first time.
+
+If the LAPI is on another machine, you need to manually register the bouncer
+and fill api_key and api_url in %%ETCDIR%%/crowdsec-spoa-bouncer.yaml before
+starting the service.
+
+Please refer to the documentation at
+https://docs.crowdsec.net/u/bouncers/haproxy_spoa
+
+Then activate the bouncer service and run it:
+
+----------
+# service crowdsec_spoa_bouncer enable
+crowdsec_spoa_bouncer enabled in /etc/rc.conf
+# service crowdsec_spoa_bouncer start
+----------
+
+The HAProxy SPOE and Lua examples are installed in:
+%%DOCSDIR%%/examples/
+
+EOM
+}
+]
