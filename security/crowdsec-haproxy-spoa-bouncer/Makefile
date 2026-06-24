@@ -1,5 +1,6 @@
 PORTNAME= 	crowdsec-haproxy-spoa-bouncer
-DISTVERSION=    0.3
+DISTVERSION=    0.3.0
+DISTVERSIONPREFIX= v
 CATEGORIES= 	security
 
 MAINTAINER= 	manuel@crowdsec.net
@@ -7,9 +8,6 @@ COMMENT=       	crowdsec haproxy spoa bouncer
 
 LICENSE= 	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
-
-USES		go:modules
-
 
 USES=		go:modules
 _BUILD_DATE=	$$(date -u "+%F_%T")

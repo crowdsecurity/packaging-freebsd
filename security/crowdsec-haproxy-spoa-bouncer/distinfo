@@ -1,0 +1,5 @@
+TIMESTAMP = 1782316729
+SHA256 (go/security_crowdsec-haproxy-spoa-bouncer/crowdsec-haproxy-spoa-bouncer-v0.3.0/v0.3.0.mod) = d21e46541638090410c8a591248ab386873679253cfcfa1d770c3505faf4bedc
+SIZE (go/security_crowdsec-haproxy-spoa-bouncer/crowdsec-haproxy-spoa-bouncer-v0.3.0/v0.3.0.mod) = 3081
+SHA256 (go/security_crowdsec-haproxy-spoa-bouncer/crowdsec-haproxy-spoa-bouncer-v0.3.0/v0.3.0.zip) = 9ddf210a00d0e999ed2f63e464c6481ab8283034abfe12874b53b76ff51c27d3
+SIZE (go/security_crowdsec-haproxy-spoa-bouncer/crowdsec-haproxy-spoa-bouncer-v0.3.0/v0.3.0.zip) = 144606
