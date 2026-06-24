@@ -1,0 +1,5 @@
+A lightweight Stream Processing Offload Agent (SPOA) that contacts the
+CrowdSec Local API to fetch decisions in real time while aiming to be
+highly performant and minimize latency for clients. It manages an
+in-memory cache of bans and captchas, and directs HAProxy on how to
+treat each connection without blocking the data path
