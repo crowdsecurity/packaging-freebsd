@@ -6,6 +6,5 @@
  listen_tcp: 0.0.0.0:9000
 -listen_unix: /run/crowdsec-spoa/spoa.sock
 +listen_unix: /var/run/crowdsec-spoa/spoa.sock
- 
  #asn_database_path: /var/lib/crowdsec/data/GeoLite2-ASN.mmdb
  #city_database_path: /var/lib/crowdsec/data/GeoLite2-City.mmdb

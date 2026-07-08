@@ -9,6 +9,6 @@ bin/crowdsec-spoa-bouncer
 %%DATADIR%%/lua/crowdsec.lua
 %%DATADIR%%/lua/template.lua
 %%DATADIR%%/lua/utils.lua
-%%PORTDOCS%%%%DOCSDIR%%/examples/crowdsec.cfg
-%%PORTDOCS%%%%DOCSDIR%%/examples/haproxy.cfg
+%%DOCSDIR%%/examples/crowdsec.cfg
+%%DOCSDIR%%/examples/haproxy.cfg
 @dir /var/log/crowdsec-spoa
