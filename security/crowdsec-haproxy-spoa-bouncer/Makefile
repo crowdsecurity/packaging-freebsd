@@ -1,5 +1,5 @@
 PORTNAME= 	crowdsec-haproxy-spoa-bouncer
-DISTVERSION=    0.3.0
+DISTVERSION=    0.3.1
 DISTVERSIONPREFIX= v
 CATEGORIES= 	security
 
