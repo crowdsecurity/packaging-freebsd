@@ -12,7 +12,7 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 USES=		go:modules
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec_spoa_bouncer
-_COMMIT=	39bfe92
+_COMMIT=	4705eac
 
 GO_MODULE=	github.com/crowdsecurity/cs-haproxy-spoa-bouncer
 GO_TARGET=	.:crowdsec-spoa-bouncer
