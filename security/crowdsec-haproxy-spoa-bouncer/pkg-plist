@@ -5,6 +5,7 @@ bin/crowdsec-spoa-bouncer
 @sample etc/crowdsec/bouncers/crowdsec-spoa-bouncer.yaml.sample
 %%DATADIR%%/_bouncer.sh
 %%DATADIR%%/html/ban.html
+%%DATADIR%%/html/ban-with-contact.html
 %%DATADIR%%/html/captcha.html
 %%DATADIR%%/lua/crowdsec.lua
 %%DATADIR%%/lua/template.lua
