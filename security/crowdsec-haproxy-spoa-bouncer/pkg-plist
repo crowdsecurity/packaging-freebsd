@@ -1,6 +1,5 @@
 @mode 0755
 bin/crowdsec-spoa-bouncer
-
 @mode 0640
 @sample etc/crowdsec/bouncers/crowdsec-spoa-bouncer.yaml.sample
 %%DATADIR%%/_bouncer.sh

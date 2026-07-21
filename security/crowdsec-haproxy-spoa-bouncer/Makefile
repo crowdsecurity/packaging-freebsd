@@ -1,12 +1,13 @@
-PORTNAME= 	crowdsec-haproxy-spoa-bouncer
-DISTVERSION=    0.3.1
-DISTVERSIONPREFIX= v
-CATEGORIES= 	security
+PORTNAME=	crowdsec-haproxy-spoa-bouncer
+DISTVERSIONPREFIX=	v
+DISTVERSION=	0.3.1
+CATEGORIES=	security
 
-MAINTAINER= 	manuel@crowdsec.net
-COMMENT=       	crowdsec haproxy spoa bouncer
+MAINTAINER=	manuel@crowdsec.net
+COMMENT=	CrowdSec HAProxy SPOA bouncer
+WWW=		https://github.com/crowdsecurity/cs-haproxy-spoa-bouncer
 
-LICENSE= 	MIT
+LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:modules
@@ -25,11 +26,11 @@ GO_BUILDFLAGS=	-trimpath -tags netgo \
 
 CGO_ENABLED=	0
 
+ETCDIR=		${PREFIX}/etc/crowdsec/bouncers
+
 SUB_FILES=	pkg-deinstall \
 		pkg-install \
 		pkg-message
-
-ETCDIR=		${PREFIX}/etc/crowdsec/bouncers
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec-spoa-bouncer \
