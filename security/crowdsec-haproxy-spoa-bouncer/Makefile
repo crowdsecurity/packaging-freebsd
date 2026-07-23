@@ -57,6 +57,12 @@ do-install:
 		${STAGEDIR}${DOCSDIR}/examples/
 	${INSTALL_DATA} ${WRKSRC}/config/haproxy*.cfg \
 		${STAGEDIR}${DOCSDIR}/examples/
+	${INSTALL_DATA} ${FILESDIR}/appsec-acquis.yaml \
+		${STAGEDIR}${DOCSDIR}/examples/
+	${INSTALL_DATA} ${FILESDIR}/crowdsec-spoa-bouncer-appsec.yaml \
+		${STAGEDIR}${DOCSDIR}/examples/
+	${INSTALL_DATA} ${FILESDIR}/haproxy-freebsd.cfg \
+		${STAGEDIR}${DOCSDIR}/examples/
 
 	@${MKDIR} ${STAGEDIR}/var/log/crowdsec-spoa
 

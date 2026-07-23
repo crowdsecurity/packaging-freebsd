@@ -11,19 +11,36 @@ If the LAPI is on another machine, you need to manually register the bouncer
 and fill api_key and api_url in %%ETCDIR%%/crowdsec-spoa-bouncer.yaml before
 starting the service.
 
-Please refer to the documentation at
+The HAProxy SPOA documentation is available at:
 https://docs.crowdsec.net/u/bouncers/haproxy_spoa
+
+The AppSec HAProxy quickstart is available at:
+https://docs.crowdsec.net/docs/appsec/quickstart/haproxy_spoa
+
+FreeBSD example configuration is installed in:
+%%DOCSDIR%%/examples/
+
+Useful starting points:
+ - appsec-acquis.yaml: CrowdSec AppSec acquisition
+ - crowdsec-spoa-bouncer-appsec.yaml: AppSec forwarding keys for the bouncer
+ - crowdsec.cfg: HAProxy SPOE agent configuration
+ - haproxy-freebsd.cfg: plain HAProxy frontend using FreeBSD paths
+
+Copy the examples you need to their runtime paths, for example:
+
+----------
+# mkdir -p /usr/local/etc/haproxy
+# mkdir -p /usr/local/etc/crowdsec/acquis.d
+# cp %%DOCSDIR%%/examples/crowdsec.cfg /usr/local/etc/haproxy/crowdsec.cfg
+# cp %%DOCSDIR%%/examples/appsec-acquis.yaml /usr/local/etc/crowdsec/acquis.d/appsec.yaml
+----------
 
 Then activate the bouncer service and run it:
 
 ----------
-# service crowdsec_spoa_bouncer enable
-crowdsec_spoa_bouncer enabled in /etc/rc.conf
+# sysrc crowdsec_spoa_bouncer_enable=YES
 # service crowdsec_spoa_bouncer start
 ----------
-
-The HAProxy SPOE and Lua examples are installed in:
-%%DOCSDIR%%/examples/
 
 EOM
 }
