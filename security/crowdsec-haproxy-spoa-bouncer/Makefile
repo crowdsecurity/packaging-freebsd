@@ -28,9 +28,7 @@ CGO_ENABLED=	0
 
 ETCDIR=		${PREFIX}/etc/crowdsec/bouncers
 
-SUB_FILES=	pkg-deinstall \
-		pkg-install \
-		pkg-message
+SUB_FILES=	pkg-deinstall pkg-install pkg-message
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKDIR}/bin/crowdsec-spoa-bouncer \
