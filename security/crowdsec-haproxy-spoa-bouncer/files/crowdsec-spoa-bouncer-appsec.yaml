@@ -1,0 +1,14 @@
+## AppSec forwarding for the HAProxy SPOA bouncer.
+##
+## Add these keys to:
+## /usr/local/etc/crowdsec/bouncers/crowdsec-spoa-bouncer.yaml
+##
+## CrowdSec AppSec must listen on the same URL. See appsec-acquis.yaml.
+
+appsec_url: "http://127.0.0.1:7422"
+appsec_timeout: "200ms"
+
+hosts:
+  - host: "*"
+    appsec:
+      always_send: false
