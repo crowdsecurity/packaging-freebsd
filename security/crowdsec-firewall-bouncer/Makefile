@@ -1,9 +1,9 @@
 PORTNAME=	crowdsec-firewall-bouncer
 DISTVERSIONPREFIX=	v
-DISTVERSION=	0.0.34
+DISTVERSION=	0.0.36
 CATEGORIES=	security
 
-MAINTAINER=	marco@crowdsec.net
+MAINTAINER=	manuel@crowdsec.net
 COMMENT=	CrowdSec bouncer written in golang for firewalls
 WWW=		https://github.com/crowdsecurity/cs-firewall-bouncer
 
@@ -11,10 +11,10 @@ LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
 USES=		go:modules
-_BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec_firewall
-_COMMIT=	41445554
 
+_BUILD_DATE=	$$(date -u "+%F_%T")
+_COMMIT=	4c31519
 GO_MODULE=	github.com/crowdsecurity/cs-firewall-bouncer
 GO_TARGET=	${PORTNAME}:./${PORTNAME}
 GO_BUILDFLAGS=	-trimpath -tags netgo \
@@ -23,15 +23,13 @@ GO_BUILDFLAGS=	-trimpath -tags netgo \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION}-freebsd \
 		-X github.com/crowdsecurity/go-cs-lib/version.BuildDate=${_BUILD_DATE} \
 		-X github.com/crowdsecurity/go-cs-lib/version.Tag=${_COMMIT}"
-
 # to allow WITH_PIE with a non PIC libc
 CGO_ENABLED=	1
 
+ETCDIR=		${PREFIX}/etc/crowdsec/bouncers
 SUB_FILES=	pkg-deinstall \
 		pkg-install \
 		pkg-message
-
-ETCDIR=		${PREFIX}/etc/crowdsec/bouncers
 
 do-install:
 	#
