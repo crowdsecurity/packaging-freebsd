@@ -10,10 +10,7 @@ WWW=		https://github.com/crowdsecurity/crowdsec
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-LIB_DEPENDS=	libabsl_base.so:devel/abseil \
-		libre2.so:devel/re2
-
-USES=		go:modules pkgconfig
+USES=		go:1.27+,modules pkgconfig
 _COMMIT=	3d369d6
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
@@ -28,7 +25,7 @@ GO_TARGET=	./cmd/crowdsec \
 		./cmd/notification-slack \
 		./cmd/notification-splunk
 
-GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_cgo \
+GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension \
 		-ldflags="\
 		-a -s \
 		-X github.com/crowdsecurity/go-cs-lib/version.Version=${DISTVERSIONPREFIX}${PKGVERSION} \
@@ -37,7 +34,7 @@ GO_BUILDFLAGS=	-v -trimpath -tags netgo,osusergo,sqlite_omit_load_extension,re2_
 		-X ${GO_MODULE}/pkg/cwversion.Codename=alphaga \
 		-X ${GO_MODULE}/pkg/csconfig.defaultConfigDir=${PREFIX}/etc/crowdsec \
 		-X ${GO_MODULE}/pkg/csconfig.defaultDataDir=/var/db/crowdsec/data \
-		-X ${GO_MODULE}/pkg/cwversion.Libre2=C++"
+		-X ${GO_MODULE}/pkg/cwversion.Libre2=WebAssembly"
 
 SUB_FILES=	pkg-deinstall pkg-install pkg-message crowdsec.cron upgrade-hub
 
