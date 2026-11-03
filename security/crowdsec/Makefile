@@ -1,6 +1,6 @@
 PORTNAME=	crowdsec
 DISTVERSIONPREFIX=	v
-DISTVERSION=	1.8.1
+DISTVERSION=	1.8.2
 CATEGORIES=	security
 
 MAINTAINER=	manuel@crowdsec.net
@@ -10,8 +10,8 @@ WWW=		https://github.com/crowdsecurity/crowdsec
 LICENSE=	MIT
 LICENSE_FILE=	${WRKSRC}/LICENSE
 
-USES=		go:1.26+,modules pkgconfig
-_COMMIT=	909b515
+USES=		go:1.27+,modules pkgconfig
+_COMMIT=	3d369d6
 _BUILD_DATE=	$$(date -u "+%F_%T")
 USE_RC_SUBR=	crowdsec
 
